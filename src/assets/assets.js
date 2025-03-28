@@ -1,4 +1,4 @@
-import employWiseLogo from "./employwiseLogo.jpg";
+import employWiseLogo from "./employWiseLogo.jpg";
 
 const assets = {
   employWiseLogo,
