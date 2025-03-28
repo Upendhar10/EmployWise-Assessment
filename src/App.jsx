@@ -17,10 +17,11 @@ const AppRouter = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/usersList",
+    path: "/home",
     element: <ProtectedRoutes />,
     children: [
       {
+        path: "usersList",
         index: true,
         element: <UsersList />,
       },
