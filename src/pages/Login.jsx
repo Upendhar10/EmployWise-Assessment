@@ -35,7 +35,7 @@ function Login() {
       if (data.token) {
         localStorage.setItem("token", data.token);
         toast.success("Login successful");
-        navigate("/usersList");
+        navigate("/home/usersList");
       } else {
         toast.error(data.error || "Invalid credentials");
       }

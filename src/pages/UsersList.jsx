@@ -3,13 +3,19 @@ import UserCard from "../components/UserCard";
 import { USERSLIST_API } from "../constants";
 import SearchFeature from "../components/SearchFeature";
 
+import { useDispatch, useSelector } from "react-redux";
+import { setUsers } from "../ReduxStore/usersSlice";
+
 function UsersList() {
   const [usersList, setUsersList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [AllUsers, setAllUsers] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const totalPages = 2;
   const [searchTerm, setSearchTerm] = useState("");
+  const totalPages = 2;
+
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users.usersList);
 
   // Fetching all usersData
   useEffect(() => {
@@ -23,7 +29,7 @@ function UsersList() {
       setAllUsers(combinedUsersData);
     };
     fetchAllUsers();
-  }, []);
+  }, [users]);
 
   // pagination
   useEffect(() => {
@@ -32,13 +38,14 @@ function UsersList() {
         const response = await fetch(`${USERSLIST_API}?page=${currentPage}`);
         const data = await response.json();
         setUsersList(data.data);
+        dispatch(setUsers(data.data));
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
 
     getUserList();
-  }, [currentPage]);
+  }, [currentPage, dispatch]);
 
   return (
     <div className="pt-20">
@@ -58,19 +65,21 @@ function UsersList() {
                 first_name={user.first_name}
                 last_name={user.last_name}
                 email={user.email}
+                userId={user.id}
               />
             ))
           ) : (
             <p>No results found</p>
           )
         ) : (
-          usersList.map((user) => (
+          users.map((user) => (
             <UserCard
               key={user.id}
               avatar={user.avatar}
               first_name={user.first_name}
               last_name={user.last_name}
               email={user.email}
+              userId={user.id}
             />
           ))
         )}
