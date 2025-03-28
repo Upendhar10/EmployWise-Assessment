@@ -1,11 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
+import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import UsersList from "./pages/UsersList";
 import EditUser from "./pages/EditUser";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 
 const AppRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Welcome />,
+  },
   {
     path: "/login",
     element: <Login />,
@@ -15,7 +21,6 @@ const AppRouter = createBrowserRouter([
     element: <ProtectedRoutes />,
     children: [
       {
-        path: "/",
         index: true,
         element: <UsersList />,
       },
@@ -31,6 +36,7 @@ function App() {
   return (
     <div className="App">
       <RouterProvider router={AppRouter} />
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
