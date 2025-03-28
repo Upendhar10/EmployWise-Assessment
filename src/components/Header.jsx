@@ -2,9 +2,13 @@ import React from "react";
 
 import assets from "../assets/assets";
 
+import { useNavigate } from "react-router-dom";
+
 function Header() {
+  const navigate = useNavigate();
   const handleLogOut = () => {
     localStorage.removeItem("token");
+    navigate("/login");
     window.location.reload();
   };
   return (
